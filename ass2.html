@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+<script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    // Your  code will go here
+
+    function DynamicData() {
+
+        const [inputData, setInputData] = React.useState([{ value: ""}])
+
+        function addHobby() {
+            setInputData([...inputData, { value: "" }])
+        }
+
+        function  handleRemove(i){
+            let filter = inputData.filter((ele ,index)=>{
+                 return index != i
+            })
+            setInputData(filter)
+              
+        }
+
+        function handleChange(newValue, i) {
+            const updatedData = [...inputData]; 
+            updatedData[i].value = newValue; 
+            setInputData(updatedData); 
+        }
+
+        return (
+            <div>
+                {inputData.map((ele, i) => {
+                    return (
+                        <div key={i}>
+                            <input
+                                value={ele.value}
+                                onChange={(e) => handleChange(e.target.value, i)}
+                            />
+                            <button onClick={addHobby}>Add Hobby</button>
+                            <button onClick = {()=>handleRemove(i)}>RemoveHobby</button>
+                        </div>
+                    )
+                })}
+            </div>
+        )
+    }
+
+    let root = ReactDOM.createRoot(document.querySelector("#root"))
+    root.render(<DynamicData />)
+</script>
+
+</html>
